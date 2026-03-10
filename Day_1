@@ -93,6 +93,7 @@ class Processor:
         floor_switches = 0
         current_floor = 0
         for instruction in roadmap:
+            # Running prefix sum
 
             match instruction:
                 case '(':
