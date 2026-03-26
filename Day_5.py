@@ -17,16 +17,23 @@ Suggestions for improvements:
 _part_2() logic could be more efficient.
 """
 
+import sys
+
+
 def gimme_data() -> list[str]:
     """
     Retrieves data from input file.
     Stores lines in list.
     :return: List of lines from input file.
     """
-    data = list()
-
-    with open("dataset.txt") as file:
-        return [line.strip() for line in file]
+    try:
+        with open("dataset.txt") as file:
+            return [line.strip() for line in file]
+    except FileNotFoundError:
+        print("File not found.")
+        print("There is no point continuing the algorithm without data input.")
+        print("Exiting...")
+        sys.exit(1)
 
 
 def solve_parts(data: list[str]) -> tuple[int, int]:
