@@ -4,10 +4,11 @@ https://adventofcode.com/2015/day/6
 """
 import sys
 
-def gimme_data():
+def gimme_data() -> list[str]:
     try:
         with open("dataset.txt") as file:
-            return [line.strip().replace("through ", '').replace("turn on", '1').replace("turn off", '2').replace("toggle", '3') for line in file]
+            return [line.strip().replace("through ", '').replace("turn on", '1')
+                    .replace("turn off", '2').replace("toggle", '3') for line in file]
     except FileNotFoundError:
         print("File not found.")
         print("There is no point in continuing without some data.")
@@ -50,7 +51,34 @@ def _part_1(data: list[str]) -> int:
 
 
 def _part_2(data: list[str]) -> int:
-    return 0
+    lights_2 = dict()
+
+    for instruction in data:
+        scenario, start, end = instruction.split(" ")
+        x1, y1 = start.split(',')
+        x2, y2 = end.split(',')
+        match scenario:
+            case '1':
+                for x in range(int(x1), int(x2) + 1):
+                    for y in range(int(y1), int(y2) + 1):
+                        if (x, y) not in lights_2:
+                            lights_2[(x, y)] = 0
+                        lights_2[(x, y)] += 1
+            case '2':
+                for x in range(int(x1), int(x2) + 1):
+                    for y in range(int(y1), int(y2) + 1):
+                        if (x, y) not in lights_2:
+                            lights_2[(x, y)] = 0
+                        lights_2[(x, y)] = max(0, lights_2[(x, y)] -1)
+            case '3':
+                for x in range(int(x1), int(x2) + 1):
+                    for y in range(int(y1), int(y2) + 1):
+                        if (x, y) not in lights_2:
+                            lights_2[(x, y)] = 2
+                        else:
+                            lights_2[(x, y)] += 2
+
+    return sum(lights_2.values())
 
 
 def main():
