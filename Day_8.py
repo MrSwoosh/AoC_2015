@@ -50,7 +50,18 @@ def _part_1(data):
 
 
 def _part_2(data):
-    return 0
+    characters_original_word = 0
+    in_mem_characters = 0
+
+    for string in data:
+        characters_original_word += len(string)
+        in_mem_characters += 2
+        for s in string:
+            if s == "\"" or s == "\\":
+                in_mem_characters += 2
+            else:
+                in_mem_characters += 1
+    return in_mem_characters - characters_original_word
 
 
 def main():
