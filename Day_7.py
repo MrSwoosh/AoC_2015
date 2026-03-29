@@ -76,14 +76,36 @@ def solve(instructions: dict[str, list[str]]) -> tuple[int, int]:
     return result_part1, result_part2
 
 
-def _part_1(start, instructions) -> int:
+def _part_1(node, instructions) -> int:
     """
+    Possible instruction patterns:
+        <integer>
+        _ <operator> _
 
-    :param start:
+    possible operator patterns:
+        <empty_string>      NOT     <dictionary_key>
+        <dictionary_key>    LSHIFT  <integer>
+        <dictionary_key>    RSHIFT  <integer>
+        <dictionary_key>    AND     <dictionary_key>
+        <dictionary_key>    OR      <dictionary_key>
+        <empty_string>      COPY    <dictionary_key>
+
+    :param node:
     :param instructions:
     :return:
     """
+    if _is_int(instructions[node]):
+        return int(instructions[node])
+
     return 0
+
+
+def _is_int(value):
+    try:
+        int(value)
+        return True
+    except ValueError:
+        return False
 
 
 def _part_2() -> int:
